@@ -1,0 +1,212 @@
+# Notes for Numerical Method
+
+Numerical Analysis is the branch of mathematics that provides tools and methods for solving mathematical problems in numerical form. 
+
+i need to watch videos about algebra and calculus. 
+
+Occurrence of error is unavoidable in the field of scientific computing. In- stead, numerical analysts try to investigate the possible and best ways to minimise the error. The study of the error and how to estimate and min- imise it are the fundamental issues in error analysis.
+
+In computing, **a roundoff error**, also called rounding error, is **the difference between the result produced by a given algorithm using exact arithmetic and the result produced by the same algorithm using finite-precision, rounded arithmetic**.
+
+Numerical Stability: Choosing algorithms that are numerically stable helps in minimizing the impact of round-off errors. A numerically stable algorithm does not amplify errors disproportionately.
+
+1. Dependence on the Method: The magnitude of truncation error is highly dependent on the method used and the point at which the process is truncated.
+2. Accuracy vs. Computational Cost: There is often a trade-off between the accuracy of the approximation (lower truncation error) and the computational cost (fewer terms means less computation).
+3. Error Analysis: Understanding truncation error is crucial for analysing the accuracy of numerical methods. It helps in determining how close the approximation is to the true value.
+
+**In computational mathematics**, an iterative method is a mathematical procedure that uses an initial value to generate a sequence of improving approximate solutions for a class of problems, in which the n-th approximation is derived from the previous ones.
+
+1. Initial Guess: Iterative methods start with an initial approximation or guess of the solution.
+2. Convergence: Through repeated application of the algorithm, the solution iteratively converges to an accurate approximation of the true solution.
+3. Termination Criteria: These methods typically involve a convergence criterion that determines when the approximation is sufficiently close to the true solution, based on either the number of iterations or the desired accuracy.
+
+For finding one root of the algoritms, Newton's method and other general iterative methods work generally well. For finding all the roots, arguably the most reliable method is the **Francis QR algorithm**computing the eigenvalues of the Companion matrix corresponding to the polynomial, implemented as the standard method in MATLAB. 
+
+Newton-Raphson Method (Newton's Method):
+
+- Principle: Uses the first derivative of f(x) to iteratively improve the approximation of the root. The formula is x_{n+1} = x_n - f(x_n)/f'(x_n) .
+- Advantages: Fast convergence when close to the root and initial guess is reasonably accurate.
+- Limitations: Requires the derivative of f(x) , may diverge if the initial guess is not close to the root, or if f(x) is not well-behaved.
+
+The main idea behind this method is that **if a continuous function changes sign within an interval, there must be a root within that interval**. The bisection method gradually reduces the size of the interval by finding the average of the endpoints. 
+
+**Python is an interpreted language, which means it directly runs the code line by line**. I
+
+The example function used is  f(x) = x^2 - 4 .
+
+- The root-finding process starts in the interval [0, 3], with a tolerance of 1 \times 10^{-5} and a maximum of 100 iterations.
+- The program successfully found a root at approximately 1.9999980926513672 after 19 iterations.
+
+This implementation demonstrates the bisection method's ability to reliably find a root within a specified tolerance, highlighting its effectiveness and efficiency for simple root-finding problems.
+
+def bisection_method(f, a, b, tolerance, max_iterations):
+"""
+Implements the bisection method for finding a root of the function f in the interval [a, b].
+
+```
+Args:
+f (function): The function for which we are finding a root.
+a (float): Lower bound of the interval.
+b (float): Upper bound of the interval.
+tolerance (float): The tolerance for convergence.
+max_iterations (int): Maximum number of iterations to perform.
+
+Returns:
+root (float): Approximated root of the function.
+"""
+if f(a) * f(b) >= 0:
+    print("Bisection method fails.")
+    return None
+
+a_n = a
+b_n = b
+for n in range(1, max_iterations + 1):
+    m_n = (a_n + b_n) / 2
+    f_m_n = f(m_n)
+    if abs(f_m_n) < tolerance:  # Root is found to the desired tolerance
+        print(f"Found solution after {n} iterations.")
+        return m_n
+    elif f(a_n) * f_m_n < 0:  # Root is in the left subinterval
+        b_n = m_n
+    elif f(b_n) * f_m_n < 0:  # Root is in the right subinterval
+        a_n = m_n
+    else:
+        print("Bisection method fails.")
+        return None
+
+print("Exceeded maximum iterations. No solution found.")
+return None
+
+```
+
+**Linear algebra** is a branch of mathematics that deals with vectors, vector spaces, linear mappings, and systems of linear equations.
+
+Linear algebra forms the basis for much of modern mathematics and provides the language for representing and solving a wide range of problems.
+
+**A vector** is a mathematical object that has both a magnitude and a direction. In the context of linear algebra, vectors can be represented as an ordered list of numbers (coordinates) and are often visualized as arrows pointing from one point to another in space.
+
+- Components: Each number in the list corresponds to a component of the vector, typically representing its magnitude along a certain axis in a space.
+- Representation: In two dimensions, a vector **v** can be represented as **v** = (v_1, v_2) , where v_1 and v_2 are the components along the x and y axes, respectively.
+1. Foundation of Linear Algebra: Vectors and vector spaces form the foundational building blocks of linear algebra.
+2. Geometric Interpretation: Vectors provide a way to geometrically interpret many problems in physics, engineering, and mathematics.
+3. Generalization: Vector spaces allow the concepts of vectors to be applied in more abstract settings beyond just geometric space, like function spaces.
+4. Wide Applications: Understanding vectors and vector spaces is crucial in fields ranging from quantum mechanics to computer graphics, where objects and transformations are often represented as vectors and matrices (linear transformations of vector spaces).
+
+In summary, vectors and vector spaces are central concepts in linear algebra, providing a framework for understanding and solving a wide range of problems in both theoretical and applied mathematics.
+
+**A matrix** is a rectangular array of numbers, symbols, or expressions, arranged in rows and columns. It's a fundamental tool in linear algebra, providing a compact way to represent and manipulate linear equations and transformations. 
+
+**A system of linear equations** is a collection of one or more linear equations involving the same set of variables. For example, a system with two equations and two variables looks like this:
+
+a_{11}x + a_{12}y = b_1
+a_{21}x + a_{22}y = b_2
+
+Here,  a_{11}, a_{12}, a_{21}, a_{22}  are coefficients,  x  and  y  are variables, and  b_1  and  b_2  are constants.
+
+**Types of Solutions**
+
+- Unique Solution: The system has exactly one solution.
+- No Solution (Inconsistent): The system has no solution, often due to parallel lines that never intersect.
+- Infinite Solutions: The system has infinitely many solutions, typically occurring when the equations describe the same line or plane.
+
+Gradient Descent is a fundamental optimization algorithm used primarily in machine learning and deep learning for minimizing a function. It is a first-order iterative optimization algorithm used to find the local minimum of a differentiable function. 
+
+**Numerical differentiation i**s the process of estimating the derivative of a function using discrete data points rather than an analytical expression. In many practical applications, such as in experimental data analysis or complex simulations, we do not have a functional form for the data, but rather discrete points. Numerical differentiation provides techniques to estimate the rate of change or the slope of the function at these points.
+
+The example function is f(x) = x^2 , and we calculate its derivative at the point x = 2 . 
+
+**Types of ODEs**
+
+1. First-Order ODEs: These involve the first derivative of the unknown function with respect to the independent variable. Example: \frac{dy}{dx} = f(x, y) .
+2. Second-Order ODEs: These involve the second derivative of the unknown function with respect to the independent variable. Example: \frac{d^2y}{dx^2} = f(x, y, \frac{dy}{dx}) .
+3. Linear ODEs: ODEs in which the unknown function and its derivatives appear linearly.
+4. Nonlinear ODEs: ODEs in which the unknown function and its derivatives appear nonlinearly.
+
+First-order ordinary differential equations (ODEs) involve derivatives of a single variable with respect to that variable. The general form of a first-order ODE is often written as:
+
+dydx=f(x,y)*dxdy*=*f*(*x*,*y*)
+
+where y*y* is the dependent variable, x*x* is the independent variable, and f(x,y)*f*(*x*,*y*) is a given function. The goal is to find a function y(x)*y*(*x*) that satisfies the equation.
+
+There are various methods to solve first-order ODEs, and the choice of method often depends on the specific form of the equation. Here are some common methods:
+
+1. **Separation of Variables:** If the equation can be written in the form dydx=g(x)h(y)*dxdy*=*g*(*x*)*h*(*y*), you can separate variables and integrate on both sides.
+2. **Integrating Factor:** Multiply the entire equation by an integrating factor to simplify the left-hand side, making it easier to integrate.
+3. **Exact Equations:** Some first-order ODEs are exact, meaning they can be written as the total differential of some function. You can use this property to find the solution.
+4. **Substitution Methods:** Introduce a new variable or make a substitution to simplify the equation and then integrate.
+5. **Linear ODEs:** If the ODE can be written in the form dydx+P(x)y=Q(x)*dxdy*+*P*(*x*)*y*=*Q*(*x*), you can use an integrating factor to solve it.
+6. **Bernoulli's Equation:** Certain ODEs can be transformed into Bernoulli's form, which can then be solved using a substitution.
+
+It's important to note that the choice of method depends on the specific characteristics of the given ODE. Additionally, initial conditions or boundary conditions may be required to determine the particular solution to the ODE.
+
+Simulations and numerical methods are closely connected, and numerical methods often play a crucial role in simulating and solving complex problems. Let's explore the relationship between simulations and numerical methods:
+
+1. **Definition:**
+    - **Simulation:** A simulation is the imitation of the operation of a real-world process or system over time. It involves creating a model that represents the essential features of the system and then using this model to observe the system's behavior.
+    - **Numerical Methods:** Numerical methods involve using numerical techniques to solve mathematical problems that may be difficult or impossible to solve analytically. These methods often rely on approximations and computations.
+2. **Numerical Simulation:**
+    - In many cases, simulations involve solving mathematical models or equations that describe the behavior of a system. These models can be differential equations, integral equations, or other mathematical representations.
+    - Numerical methods are frequently employed to simulate the evolution of systems over time. This involves discretizing time and space, approximating derivatives, and solving the resulting algebraic equations numerically.
+3. **Examples of Connection:**
+    - **Physics Simulations:** When simulating physical systems, numerical methods are commonly used to solve differential equations that describe the motion of particles, fluid dynamics, heat transfer, etc.
+    - **Financial Simulations:** In finance, simulations are used to model the behavior of financial instruments or portfolios. Numerical methods might be applied to solve complex stochastic differential equations governing the financial processes.
+    - **Computer Graphics:** Simulating realistic visual effects often involves numerical methods for solving equations related to light propagation, fluid dynamics, and other physical phenomena.
+    1. **Software and Tools:**
+        - Simulation software often integrates numerical methods to solve the underlying mathematical models. This includes methods for solving differential equations, optimization problems, and linear algebraic equations.
+        - Numerical libraries and tools, such as MATLAB, Python's NumPy and SciPy, or specialized libraries like OpenFOAM for fluid dynamics, are commonly used in simulations.
+    
+    import numpy as np
+    import matplotlib.pyplot as plt
+    
+    parameters
+    
+    alpha = 0.1  # Rabbit birth rate
+    beta = 0.02  # Predation rate
+    delta = 0.3  # Predator reproduction rate
+    gamma = 0.01  # Predator death rate
+    
+    initial propositions 
+    
+    rabbits = 40
+    foxes = 9
+    
+    Time settings
+    
+    t_max = 200
+    dt = 0.1
+    
+    Lists to store population values
+    
+    rabbit_population = [rabbits]
+    fox_population = [foxes]
+    time_points = [0]
+    
+    Simulation using the Lotka-Volterra equations
+    
+    for t in np.arange(0, t_max, dt):
+    rabbit_growth = alpha * rabbits - beta * rabbits * foxes
+    fox_growth = delta * rabbits * foxes - gamma * foxes
+    
+    ```
+    rabbits += rabbit_growth * dt
+    foxes += fox_growth * dt
+    
+    rabbit_population.append(rabbits)
+    fox_population.append(foxes)
+    time_points.append(t)
+    
+    ```
+    
+    Plotting the results
+    
+    plt.figure(figsize=(10, 6))
+    plt.plot(time_points, rabbit_population, label='Rabbits')
+    plt.plot(time_points, fox_population, label='Foxes')
+    plt.xlabel('Time')
+    plt.ylabel('Population')
+    plt.legend()
+    plt.title('Lotka-Volterra Predator-Prey Simulation')
+    plt.grid(True)vf
+    plt.show()
+    
+    In this simulation, we use the Lotka-Volterra equations to model the population dynamics of rabbits and foxes over time.
